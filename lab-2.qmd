@@ -1,0 +1,83 @@
+---
+title: "ESS-330-lab-2"
+format: html
+editor: visual
+---
+
+##
+
+```{r}
+library(dplyr)
+library(tidyverse)
+```
+Question 1: Read in the Minnesota tree growth dataset. Use glimpse to understand the structure and names of the dataset. Decribe the structure and what you see in the dataset?
+```{r}
+glimpse(tree_dat)
+```
+#It pulled up data from two rows (131 and 386), and has 8 columns worth of information that incluse things like year, age, species, etc. 
+#Question 2: How many records have been made in stand 1?
+```{r}
+tree_dat %>%
+  filter(standID == 1) %>%
+  tally()
+```
+#979
+#Question 3: How many records of the Abies balsamea and Pinus strobus species have been made?
+```{r}
+tree_dat %>%
+  filter(species %in% c("ABBA", "PIST")) %>%
+  count(species)
+```
+#There are 13033 records of Abies balsamea and 4188 records of pinus strobus
+#Question 4: How many trees are older then 200 years old in the last year of the dataset?
+```{r}
+last_year <- max(tree_dat$year, na.rm = TRUE)
+
+tree_dat %>%
+  filter(year == last_year, age >200) %>%
+  tally()
+```
+#7 trees are older than 200 years
+#Question 5: What is the oldest tree in the dataset found using slice_max?
+```{r}
+tree_dat %>%
+  slice_max(order_by = age, n=1)
+```
+#It is a PIRE tree at the age of 269 years old
+#Question 6: Find the oldest 5 trees recorded in 2001. Use the help docs to understand optional parameters
+```{r}
+tree_dat %>%
+  filter(year == 2001) %>%
+  slice_max(order_by = age, n=5)
+```
+#Listed above
+#Question 7: Using slice_sample, how many trees are in a 30% sample of those recorded in 2002?
+```{r}
+trees_2002 <- tree_dat %>%
+  filter(year == 2002) 
+sampled_trees <- trees_2002 %>%
+  slice_sample(prop = 0.3)
+
+nrow(sampled_trees)
+```
+#687 trees are in a 30% sample
+#Question 8: Filter all trees in stand 5 in 2007. Sort this subset by descending radius at breast height (rad_ib) and use slice_head() to get the top three trees. Report the tree IDs
+```{r}
+
+```
+
+#Question 9: Reduce your full data.frame to [treeID, stand, year, and radius at breast height]. Filter to only those in stand 3 with records from 2007, and use slice_min to pull the smallest three trees meaured that year.
+```{r}
+
+```
+
+#Question 10: Use select to remove the stand column. Use glimspe to show the dataset.
+```{r}
+
+```
+
+#Question 11: Look at the help document for dplyr::select and examine the “Overview of selection features”. Identify an option (there are multiple) that would help select all columns with the string “ID” in the name. Using glimpse to view the remaining dataset
+```{r}
+
+```
+
